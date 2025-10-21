@@ -1,114 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #282c34;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .App {
   text-align: center;
-  max-width: 728px;
-  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .App header {
-  background-color: #181717;
-  height: 10vh;
-  min-height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  height: 70px;
   color: white;
   position: fixed;
   width: 100%;
-  max-width: 728px;
   top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 99;
-  padding: 10px;
+  padding: 0 40px;
   box-sizing: border-box;
+}
+
+.App header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .App section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
-  background-color: rgb(40, 37, 53);
+  height: 100vh;
+  padding-top: 70px;
+  overflow: hidden;
 }
 
 main {
-  padding: 10px;
-  height: 80vh;
-  margin: 10vh 0 10vh;
-  overflow-y: scroll;
+  padding: 20px 40px;
+  height: calc(100vh - 160px);
+  margin: 70px 0 90px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: none;
 }
 
 main::-webkit-scrollbar {
-  width: 0.25rem;
+  width: 8px;
 }
 
 main::-webkit-scrollbar-track {
-  background: #1e1e24;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
 main::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 10px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a4190);
 }
 
 form {
-  height: 10vh;
+  height: 90px;
   position: fixed;
   bottom: 0;
-  background-color: rgb(24, 23, 23);
+  left: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
-  max-width: 728px;
   display: flex;
-  font-size: 1.5rem;
+  padding: 20px 40px;
+  gap: 15px;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 form button {
-  width: 20%;
-  background-color: rgb(56, 56, 143);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  min-width: 60px;
 }
 
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
 
 input {
-  line-height: 1.5;
-  width: 100%;
-  font-size: 1.5rem;
-  background: rgb(58, 58, 58);
+  flex: 1;
+  padding: 15px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
   outline: none;
-  border: none;
-  padding: 0 10px;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 button {
-  background-color: #282c34; /* Green */
+  background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 12px 24px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 
 .sign-in {
-  color: #282c34;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
   max-width: 400px;
   margin: 0 auto;
+  padding: 20px 40px;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.sign-in:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
 
+.sign-out {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
 
+.sign-out:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sign-in section styling */
+.App section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 70px 20px 20px;
+}
+
+.App section p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-top: 20px;
+  text-align: center;
+  background: none;
+  padding: 0;
+  max-width: 400px;
+}
 
 ul, li {
   text-align: left;
@@ -116,21 +246,36 @@ ul, li {
 }
 
 p {
-  max-width: 500px;
-  margin-bottom: 12px;
-  line-height: 24px;
-  padding: 10px 20px;
+  max-width: 70%;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  padding: 15px 20px;
   border-radius: 25px;
   position: relative;
   color: white;
-  text-align: center;
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 1rem;
 }
 
 .message {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  margin-bottom: 15px;
+  animation: fadeInUp 0.3s ease;
+  width: 100%;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .sent {
   flex-direction: row-reverse;
@@ -138,95 +283,186 @@ p {
 
 .sent p {
   color: white;
-  background: #0b93f6;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   align-self: flex-end;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  margin-left: auto;
 }
+
 .received p {
-  background: #e5e5ea;
-  color: black;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  margin-right: auto;
 }
 
 img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin: 2px 5px;
+  margin: 0 15px 5px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 /* Room Selector Styles */
 .room-selector {
-  padding: 20px;
+  padding: 40px;
   color: white;
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
 }
 
 .room-selector h2 {
-  margin-bottom: 30px;
-  color: #6649b8;
+  margin-bottom: 50px;
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(135deg, #fff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 8px 32px rgba(255, 255, 255, 0.4);
+  letter-spacing: -0.02em;
 }
 
 .room-actions {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .create-room-btn {
-  background-color: #6649b8;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 18px 40px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-room-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.create-room-btn:hover::before {
+  left: 100%;
 }
 
 .create-room-btn:hover {
-  background-color: #7d5ce8;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
 }
 
 .create-room-form {
   position: relative;
   height: auto;
   background: transparent;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .create-room-form input {
   flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  background: rgb(58, 58, 58);
-  border: 2px solid #6649b8;
+  padding: 15px 20px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   font-size: 1rem;
+  color: white;
+}
+
+.create-room-form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .create-room-form button {
-  background-color: #28a745;
-  padding: 12px 20px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  padding: 15px 25px;
+  border-radius: 50px;
   font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+.create-room-form button:hover {
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+}
+
+.rooms-list {
+  width: 100%;
+  max-width: 800px;
 }
 
 .rooms-list h3 {
-  text-align: left;
-  margin-bottom: 15px;
-  color: #ccc;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
 }
 
 .room-item {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 10px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 25px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.room-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.room-item:hover::before {
+  opacity: 1;
 }
 
 .room-item:hover {
   background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .room-info {
@@ -235,14 +471,15 @@ img {
 }
 
 .room-info h4 {
-  margin: 0 0 5px 0;
+  margin: 0 0 8px 0;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .room-info p {
-  margin: 0 0 5px 0;
-  color: #ccc;
+  margin: 0 0 8px 0;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
   padding: 0;
   background: none;
@@ -250,109 +487,251 @@ img {
 }
 
 .member-count {
-  font-size: 0.8rem;
-  color: #6649b8;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
 }
 
 .join-btn {
-  background-color: #0b93f6;
-  padding: 8px 16px;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 10px 20px;
+  border-radius: 50px;
   font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .join-btn:hover {
-  background-color: #0a7fd4;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 /* Chat Header Styles */
 .chat-header {
-  background-color: #181717;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px 40px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
   position: fixed;
-  top: 10vh;
+  top: 70px;
+  left: 0;
   width: 100%;
-  max-width: 728px;
-  z-index: 98;
-  box-sizing: border-box;
-}
-
-.back-btn {
-  background-color: #6649b8;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-.back-btn:hover {
-  background-color: #7d5ce8;
-}
-
-.chat-header h2 {
-  margin: 0;
-  color: white;
-  font-size: 1.3rem;
-}
-
-/* Adjust main content when chat header is present */
-.App section main {
-  margin-top: 15vh;
-  height: 75vh;
-}/* De
-lete button styles */
-.room-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 1rem;
-  min-width: auto;
-  width: auto;
-}
-
-.delete-btn:hover {
-  background-color: #c82333;
-}
-
-.delete-room-btn {
-  background-color: #dc3545;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  margin-left: auto;
-}
-
-.delete-room-btn:hover {
-  background-color: #c82333;
-}
-
-/* Update chat header to use flexbox */
-.chat-header {
-  background-color: #181717;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: fixed;
-  top: 10vh;
-  width: 100%;
-  max-width: 728px;
   z-index: 98;
   box-sizing: border-box;
   justify-content: flex-start;
 }
 
+.back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
 .chat-header h2 {
   margin: 0;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   flex: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Adjust main content when chat header is present */
+.App section main {
+  margin-top: 140px;
+  height: calc(100vh - 230px);
+}
+
+/* Delete button styles */
+.room-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  padding: 8px 12px;
+  border-radius: 50px;
+  font-size: 1rem;
+  min-width: auto;
+  width: auto;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+  position: relative;
+  z-index: 11;
+  pointer-events: auto;
+}
+
+.delete-btn:hover {
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+  transform: translateY(-2px);
+}
+
+.delete-room-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  margin-left: auto;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.delete-room-btn:hover {
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Loading and empty states */
+.rooms-list p {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+}
+
+/* Floating particles animation removed */
+
+/* Enhanced message bubbles */
+.sent p {
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  align-self: flex-end;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  position: relative;
+  margin-left: auto;
+}
+
+.sent p::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.received p {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  margin-right: auto;
+}
+
+/* Enhanced sign-in button */
+.sign-in {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 25px 50px;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.sign-in::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+.sign-in:hover::before {
+  left: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App header {
+    padding: 0 20px;
+  }
+  
+  main {
+    padding: 15px 20px;
+  }
+  
+  p {
+    max-width: 85%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+  
+  img {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px 5px;
+  }
+  
+  .room-selector {
+    padding: 20px 15px;
+  }
+  
+  .room-selector h2 {
+    font-size: 2.5rem;
+  }
+  
+  .create-room-form {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .room-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .room-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  form {
+    padding: 15px 20px;
+  }
+  
+  .chat-header {
+    padding: 15px 20px;
+  }
+  
+  .sign-in {
+    max-width: 90%;
+    padding: 20px 30px;
+    font-size: 1.1rem;
+  }
 }

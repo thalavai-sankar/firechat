@@ -76,7 +76,7 @@ function RoomSelector({ onRoomSelect }) {
   const [newRoomName, setNewRoomName] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  
+
   const roomsRef = firestore.collection('rooms');
   // Remove orderBy to avoid index issues, we'll sort in the component
   const [rooms] = useCollectionData(roomsRef, { idField: 'id' });
@@ -84,11 +84,11 @@ function RoomSelector({ onRoomSelect }) {
   const createRoom = async (e) => {
     e.preventDefault();
     const roomName = newRoomName.trim();
-    
+
     if (!roomName || isCreating) return;
 
     setIsCreating(true);
-    
+
     try {
       // Check if user is authenticated
       if (!auth.currentUser) {
@@ -98,10 +98,10 @@ function RoomSelector({ onRoomSelect }) {
       const { uid, displayName, photoURL } = auth.currentUser;
       console.log('Creating room with user:', { uid, displayName, photoURL });
       console.log('Room name:', roomName);
-      
+
       // Test basic Firestore write first
       console.log('Testing Firestore write...');
-      
+
       const docRef = await roomsRef.add({
         name: roomName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -110,9 +110,9 @@ function RoomSelector({ onRoomSelect }) {
         creatorPhoto: photoURL || '',
         memberCount: 1
       });
-      
+
       console.log('Room created successfully with ID:', docRef.id);
-      
+
       setNewRoomName('');
       setShowCreateForm(false);
       onRoomSelect(docRef.id);
@@ -120,14 +120,14 @@ function RoomSelector({ onRoomSelect }) {
       console.error('Full error object:', error);
       console.error('Error code:', error.code);
       console.error('Error message:', error.message);
-      
+
       let errorMessage = error.message;
       if (error.code === 'permission-denied') {
         errorMessage = 'Permission denied. Please check Firestore security rules.';
       } else if (error.code === 'unauthenticated') {
         errorMessage = 'User not authenticated. Please sign in again.';
       }
-      
+
       alert(`Failed to create room: ${errorMessage}`);
     } finally {
       setIsCreating(false);
@@ -140,7 +140,7 @@ function RoomSelector({ onRoomSelect }) {
 
   const deleteRoom = async (roomId, roomName, e) => {
     e.stopPropagation(); // Prevent triggering the room click
-    
+
     if (!window.confirm(`Are you sure you want to delete "${roomName}"? This action cannot be undone.`)) {
       return;
     }
@@ -148,18 +148,18 @@ function RoomSelector({ onRoomSelect }) {
     try {
       const roomRef = firestore.doc(`rooms/${roomId}`);
       const messagesRef = firestore.collection(`rooms/${roomId}/messages`);
-      
+
       // Delete all messages in the room first
       const messagesSnapshot = await messagesRef.get();
       const batch = firestore.batch();
-      
+
       messagesSnapshot.docs.forEach(doc => {
         batch.delete(doc.ref);
       });
-      
+
       // Delete the room document
       batch.delete(roomRef);
-      
+
       await batch.commit();
       console.log('Room deleted successfully');
     } catch (error) {
@@ -171,10 +171,10 @@ function RoomSelector({ onRoomSelect }) {
   return (
     <div className="room-selector">
       <h2>Choose a Chat Room</h2>
-      
+
       <div className="room-actions">
-        <button 
-          className="create-room-btn" 
+        <button
+          className="create-room-btn"
           onClick={() => setShowCreateForm(!showCreateForm)}
         >
           {showCreateForm ? 'Cancel' : 'Create New Room'}
@@ -221,8 +221,8 @@ function RoomSelector({ onRoomSelect }) {
                   <div className="room-actions">
                     <button className="join-btn">Join</button>
                     {isCreator && (
-                      <button 
-                        className="delete-btn" 
+                      <button
+                        className="delete-btn"
                         onClick={(e) => deleteRoom(room.id, room.name, e)}
                         title="Delete room"
                       >
@@ -266,7 +266,7 @@ function ChatRoom({ roomId, onLeaveRoom }) {
 
     const { uid, photoURL, displayName } = auth.currentUser;
     const messageText = formValue.trim();
-    
+
     if (!messageText) return;
 
     // Clear the input immediately for better UX
@@ -280,7 +280,7 @@ function ChatRoom({ roomId, onLeaveRoom }) {
         photoURL,
         displayName
       });
-      
+
       dummy.current.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       console.error('Error sending message:', error);
@@ -297,21 +297,21 @@ function ChatRoom({ roomId, onLeaveRoom }) {
     try {
       const roomRef = firestore.doc(`rooms/${roomId}`);
       const messagesRef = firestore.collection(`rooms/${roomId}/messages`);
-      
+
       // Delete all messages in the room first
       const messagesSnapshot = await messagesRef.get();
       const batch = firestore.batch();
-      
+
       messagesSnapshot.docs.forEach(doc => {
         batch.delete(doc.ref);
       });
-      
+
       // Delete the room document
       batch.delete(roomRef);
-      
+
       await batch.commit();
       console.log('Room deleted successfully');
-      
+
       // Go back to room selector
       onLeaveRoom();
     } catch (error) {
@@ -344,10 +344,10 @@ function ChatRoom({ roomId, onLeaveRoom }) {
       </main>
 
       <form onSubmit={sendMessage}>
-        <input 
-          value={formValue} 
-          onChange={(e) => setFormValue(e.target.value)} 
-          placeholder="say something nice" 
+        <input
+          value={formValue}
+          onChange={(e) => setFormValue(e.target.value)}
+          placeholder="say something nice"
         />
         <button type="submit" disabled={!formValue}>🕊️</button>
       </form>
