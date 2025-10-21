@@ -153,3 +153,152 @@ img {
   margin: 2px 5px;
 }
 
+/* Room Selector Styles */
+.room-selector {
+  padding: 20px;
+  color: white;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.room-selector h2 {
+  margin-bottom: 30px;
+  color: #6649b8;
+}
+
+.room-actions {
+  margin-bottom: 20px;
+}
+
+.create-room-btn {
+  background-color: #6649b8;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.create-room-btn:hover {
+  background-color: #7d5ce8;
+}
+
+.create-room-form {
+  position: relative;
+  height: auto;
+  background: transparent;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+.create-room-form input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgb(58, 58, 58);
+  border: 2px solid #6649b8;
+  font-size: 1rem;
+}
+
+.create-room-form button {
+  background-color: #28a745;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.rooms-list h3 {
+  text-align: left;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.room-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.room-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.room-info {
+  text-align: left;
+  flex: 1;
+}
+
+.room-info h4 {
+  margin: 0 0 5px 0;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.room-info p {
+  margin: 0 0 5px 0;
+  color: #ccc;
+  font-size: 0.9rem;
+  padding: 0;
+  background: none;
+  text-align: left;
+}
+
+.member-count {
+  font-size: 0.8rem;
+  color: #6649b8;
+}
+
+.join-btn {
+  background-color: #0b93f6;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.join-btn:hover {
+  background-color: #0a7fd4;
+}
+
+/* Chat Header Styles */
+.chat-header {
+  background-color: #181717;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: fixed;
+  top: 10vh;
+  width: 100%;
+  max-width: 728px;
+  z-index: 98;
+  box-sizing: border-box;
+}
+
+.back-btn {
+  background-color: #6649b8;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.back-btn:hover {
+  background-color: #7d5ce8;
+}
+
+.chat-header h2 {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+}
+
+/* Adjust main content when chat header is present */
+.App section main {
+  margin-top: 15vh;
+  height: 75vh;
+}
