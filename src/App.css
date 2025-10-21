@@ -301,4 +301,58 @@ img {
 .App section main {
   margin-top: 15vh;
   height: 75vh;
+}/* De
+lete button styles */
+.room-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  min-width: auto;
+  width: auto;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.delete-room-btn {
+  background-color: #dc3545;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+.delete-room-btn:hover {
+  background-color: #c82333;
+}
+
+/* Update chat header to use flexbox */
+.chat-header {
+  background-color: #181717;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: fixed;
+  top: 10vh;
+  width: 100%;
+  max-width: 728px;
+  z-index: 98;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+.chat-header h2 {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+  flex: 1;
 }

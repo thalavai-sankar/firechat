@@ -138,6 +138,36 @@ function RoomSelector({ onRoomSelect }) {
     onRoomSelect(roomId);
   };
 
+  const deleteRoom = async (roomId, roomName, e) => {
+    e.stopPropagation(); // Prevent triggering the room click
+    
+    if (!window.confirm(`Are you sure you want to delete "${roomName}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const roomRef = firestore.doc(`rooms/${roomId}`);
+      const messagesRef = firestore.collection(`rooms/${roomId}/messages`);
+      
+      // Delete all messages in the room first
+      const messagesSnapshot = await messagesRef.get();
+      const batch = firestore.batch();
+      
+      messagesSnapshot.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      
+      // Delete the room document
+      batch.delete(roomRef);
+      
+      await batch.commit();
+      console.log('Room deleted successfully');
+    } catch (error) {
+      console.error('Error deleting room:', error);
+      alert(`Failed to delete room: ${error.message}`);
+    }
+  };
+
   return (
     <div className="room-selector">
       <h2>Choose a Chat Room</h2>
@@ -179,16 +209,30 @@ function RoomSelector({ onRoomSelect }) {
               if (!b.createdAt) return -1;
               return b.createdAt.seconds - a.createdAt.seconds;
             })
-            .map(room => (
-              <div key={room.id} className="room-item" onClick={() => joinRoom(room.id)}>
-                <div className="room-info">
-                  <h4>{room.name}</h4>
-                  <p>Created by {room.creatorName || 'Anonymous'}</p>
-                  <span className="member-count">👥 {room.memberCount || 1} members</span>
+            .map(room => {
+              const isCreator = auth.currentUser && room.createdBy === auth.currentUser.uid;
+              return (
+                <div key={room.id} className="room-item" onClick={() => joinRoom(room.id)}>
+                  <div className="room-info">
+                    <h4>{room.name}</h4>
+                    <p>Created by {room.creatorName || 'Anonymous'}</p>
+                    <span className="member-count">👥 {room.memberCount || 1} members</span>
+                  </div>
+                  <div className="room-actions">
+                    <button className="join-btn">Join</button>
+                    {isCreator && (
+                      <button 
+                        className="delete-btn" 
+                        onClick={(e) => deleteRoom(room.id, room.name, e)}
+                        title="Delete room"
+                      >
+                        🗑️
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <button className="join-btn">Join</button>
-              </div>
-            ))
+              );
+            })
         ) : (
           <p>No rooms available. Create the first one!</p>
         )}
@@ -245,6 +289,37 @@ function ChatRoom({ roomId, onLeaveRoom }) {
     }
   };
 
+  const deleteCurrentRoom = async () => {
+    if (!roomData || !window.confirm(`Are you sure you want to delete "${roomData.name}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const roomRef = firestore.doc(`rooms/${roomId}`);
+      const messagesRef = firestore.collection(`rooms/${roomId}/messages`);
+      
+      // Delete all messages in the room first
+      const messagesSnapshot = await messagesRef.get();
+      const batch = firestore.batch();
+      
+      messagesSnapshot.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      
+      // Delete the room document
+      batch.delete(roomRef);
+      
+      await batch.commit();
+      console.log('Room deleted successfully');
+      
+      // Go back to room selector
+      onLeaveRoom();
+    } catch (error) {
+      console.error('Error deleting room:', error);
+      alert(`Failed to delete room: ${error.message}`);
+    }
+  };
+
 
 
   return (
@@ -252,6 +327,11 @@ function ChatRoom({ roomId, onLeaveRoom }) {
       <div className="chat-header">
         <button className="back-btn" onClick={onLeaveRoom}>← Back to Rooms</button>
         <h2>{roomData?.name || 'Loading...'}</h2>
+        {roomData && auth.currentUser && roomData.createdBy === auth.currentUser.uid && (
+          <button className="delete-room-btn" onClick={deleteCurrentRoom} title="Delete room">
+            🗑️ Delete Room
+          </button>
+        )}
       </div>
 
       <main>
